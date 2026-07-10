@@ -87,9 +87,9 @@ export function CursorOrb() {
 
   return (
     <>
-      <div ref={coreRef} className="fixed top-0 left-0 w-3 h-3 rounded-full pointer-events-none z-[9999]"
+      <div ref={coreRef} className="hidden md:block fixed top-0 left-0 w-3 h-3 rounded-full pointer-events-none z-[9999]"
         style={{ background: 'radial-gradient(circle,#00ff87,#00d4ff)', boxShadow: '0 0 12px #00ff87, 0 0 24px #00d4ff', mixBlendMode: 'screen' }} />
-      <div ref={ringRef} className="fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9998] border border-violet-400/60"
+      <div ref={ringRef} className="hidden md:block fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9998] border border-violet-400/60"
         style={{ boxShadow: '0 0 8px rgba(167,139,250,0.3)', mixBlendMode: 'screen' }} />
     </>
   );
