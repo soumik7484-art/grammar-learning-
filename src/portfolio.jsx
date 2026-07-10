@@ -13,6 +13,7 @@ export function CursorOrb() {
 
   useEffect(() => {
     document.documentElement.classList.add('cursor-none');
+    
     const move = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY };
       document.documentElement.style.setProperty('--cx', e.clientX + 'px');
@@ -28,14 +29,32 @@ export function CursorOrb() {
         }
       }
     };
+    
     const resetMag = (e) => {
       if (e.target && typeof e.target.closest === 'function') {
         const m = e.target.closest('[data-magnetic]');
         if (m) m.style.transform = '';
       }
     };
+
+    // Synthetic mouse event generator for touch devices
+    const handleTouch = (e) => {
+      if (e.touches && e.touches.length > 0) {
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent('mousemove', {
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+          bubbles: true,
+          cancelable: true
+        });
+        touch.target.dispatchEvent(mouseEvent);
+      }
+    };
+
     window.addEventListener('mousemove', move);
     document.addEventListener('mouseleave', resetMag, true);
+    window.addEventListener('touchmove', handleTouch, { passive: true });
+    window.addEventListener('touchstart', handleTouch, { passive: true });
 
     let id;
     const tick = () => {
@@ -48,10 +67,13 @@ export function CursorOrb() {
       id = requestAnimationFrame(tick);
     };
     tick();
+    
     return () => {
       document.documentElement.classList.remove('cursor-none');
       window.removeEventListener('mousemove', move);
       document.removeEventListener('mouseleave', resetMag, true);
+      window.removeEventListener('touchmove', handleTouch);
+      window.removeEventListener('touchstart', handleTouch);
       cancelAnimationFrame(id);
     };
   }, []);
