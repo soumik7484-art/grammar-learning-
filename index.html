@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soumik Chatterjee | Cinematic Interactive Portfolio</title>
+  </head>
+  <body>
+    <div id="error-fallback" style="display:none; color: #34d399; background: #020202; padding: 30px; font-family: monospace; font-size: 14px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 999999; overflow: auto; border: 2px solid #10b981;">
+      <h1 style="font-size: 24px; color: #10b981; margin-bottom: 20px; text-shadow: 0 0 10px #10b981;">⚠️ DIAGNOSTIC_LINK_ERROR</h1>
+      <p style="color: #888; margin-bottom: 20px;">A runtime error has occurred. Details are captured below:</p>
+      <pre id="error-message" style="background: rgba(16,185,129,0.05); padding: 20px; border: 1px solid rgba(16,185,129,0.2); border-radius: 8px; overflow-x: auto; color: #e2e8f0;"></pre>
+    </div>
+    <script>
+      window.addEventListener('error', function(event) {
+        var fb = document.getElementById('error-fallback');
+        var msg = document.getElementById('error-message');
+        if (fb && msg) {
+          fb.style.display = 'block';
+          msg.textContent = event.error ? (event.error.stack || event.error.toString()) : event.message;
+        }
+      });
+      window.addEventListener('unhandledrejection', function(event) {
+        var fb = document.getElementById('error-fallback');
+        var msg = document.getElementById('error-message');
+        if (fb && msg) {
+          fb.style.display = 'block';
+          msg.textContent = 'Unhandled promise rejection:\n' + (event.reason ? (event.reason.stack || event.reason.toString()) : 'Unknown reason');
+        }
+      });
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
