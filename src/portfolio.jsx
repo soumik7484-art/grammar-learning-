@@ -41,13 +41,20 @@ export function CursorOrb() {
     const handleTouch = (e) => {
       if (e.touches && e.touches.length > 0) {
         const touch = e.touches[0];
+        
+        // Directly update the cursor state coordinates for immediate orb response
+        mouse.current = { x: touch.clientX, y: touch.clientY };
+        document.documentElement.style.setProperty('--cx', touch.clientX + 'px');
+        document.documentElement.style.setProperty('--cy', touch.clientY + 'px');
+
+        // Dispatch synthetic mouse event directly on window so all window mousemove listeners get it
         const mouseEvent = new MouseEvent('mousemove', {
           clientX: touch.clientX,
           clientY: touch.clientY,
           bubbles: true,
           cancelable: true
         });
-        touch.target.dispatchEvent(mouseEvent);
+        window.dispatchEvent(mouseEvent);
       }
     };
 
