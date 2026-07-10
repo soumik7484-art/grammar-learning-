@@ -2,6 +2,8 @@
 
 Welcome to the repository of my cinematic, award-winning interactive portfolio built using React, Tailwind CSS, Framer Motion, and GSAP.
 
+🔗 **Live Deployment**: 👉 [https://mcq-livid.vercel.app](https://mcq-livid.vercel.app)
+
 Each section is designed as a distinct high-fidelity immersive environment with custom color coding, responsive SVG animations, cursor tracking, and spring physics.
 
 ---
