@@ -119,7 +119,7 @@ export default function Assessment() {
     stopAwayTimer();
     setSubmitting(true);
     try {
-      const answersArr = lesson.questions.map((_: any, i: number) => ({ questionIndex: i, answer: answers[i] || '' }));
+      const answersArr = lesson.questions.map((q: any) => ({ questionIndex: q.dbIndex, answer: answers[q.dbIndex] || '' })).sort((a: any, b: any) => a.questionIndex - b.questionIndex);
       const { data } = await api.post('/lessons/submit', {
         lessonId: lessonId.current,
         answers: answersArr,
@@ -207,7 +207,7 @@ export default function Assessment() {
       <div className='space-y-4'>
         {lesson.questions.map((q: any, i: number) => (
           <div key={i} className={`glass-card p-5 border-l-4 transition-all duration-200 ${
-            answers[i] ? 'border-emerald-400' : 'border-slate-200'
+            answers[q.dbIndex] ? 'border-emerald-400' : 'border-slate-200'
           }`}>
             <div className='flex items-start gap-3 mb-3'>
               <span className='w-7 h-7 rounded-xl bg-emerald-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0'>{i + 1}</span>
@@ -223,14 +223,14 @@ export default function Assessment() {
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 ml-10'>
                 {q.options.map((opt: string, j: number) => (
                   <button key={j} type='button'
-                    onClick={() => setAnswers({ ...answers, [i]: opt })}
+                    onClick={() => setAnswers({ ...answers, [q.dbIndex]: opt })}
                     className={`px-4 py-2.5 rounded-2xl border-2 text-sm font-medium text-left transition-all duration-200 hover:scale-[1.02] ${
-                      answers[i] === opt
+                      answers[q.dbIndex] === opt
                         ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-md'
                         : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
                     }`}>
                     <span className='w-5 h-5 inline-flex items-center justify-center rounded-full border mr-2 text-xs
-                      ${answers[i] === opt ? "bg-emerald-500 border-emerald-500 text-white" : "border-slate-300"}'>
+                      ${answers[q.dbIndex] === opt ? "bg-emerald-500 border-emerald-500 text-white" : "border-slate-300"}'>
                       {String.fromCharCode(65 + j)}
                     </span>
                     {opt}
@@ -241,8 +241,8 @@ export default function Assessment() {
               <input type='text'
                 className='input-field ml-10 mt-1'
                 placeholder='Type your answer here...'
-                value={answers[i] || ''}
-                onChange={e => setAnswers({ ...answers, [i]: e.target.value })}
+                value={answers[q.dbIndex] || ''}
+                onChange={e => setAnswers({ ...answers, [q.dbIndex]: e.target.value })}
                 onCopy={e => e.preventDefault()}
                 onPaste={e => e.preventDefault()} />
             )}

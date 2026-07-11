@@ -10,8 +10,8 @@ router.get('/today', protect, async (req, res) => {
     const student = await Student.findById(req.user._id);
     const lesson = await Lesson.findOne({ dayNumber: student.currentDay });
     if (!lesson) return res.status(404).json({ message: 'Lesson not found' });
-    // shuffle questions
-    const shuffled = [...lesson.questions].sort(() => Math.random() - 0.5);
+    // shuffle questions with database indices
+    const shuffled = lesson.questions.map((q, idx) => ({ ...q.toObject(), dbIndex: idx })).sort(() => Math.random() - 0.5);
     const progress = await Progress.findOne({ student: student._id, lesson: lesson._id });
     res.json({ lesson: { ...lesson.toObject(), questions: shuffled }, progress, completed: progress?.completed || false });
   } catch (err) {
@@ -27,7 +27,8 @@ router.get('/day/:day', protect, async (req, res) => {
       return res.status(403).json({ message: 'Lesson locked' });
     const lesson = await Lesson.findOne({ dayNumber: day });
     if (!lesson) return res.status(404).json({ message: 'Not found' });
-    const shuffled = [...lesson.questions].sort(() => Math.random() - 0.5);
+    // shuffle questions with database indices
+    const shuffled = lesson.questions.map((q, idx) => ({ ...q.toObject(), dbIndex: idx })).sort(() => Math.random() - 0.5);
     const progress = await Progress.findOne({ student: student._id, lesson: lesson._id });
     res.json({ lesson: { ...lesson.toObject(), questions: shuffled }, progress });
   } catch (err) {
