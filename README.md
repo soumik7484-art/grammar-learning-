@@ -97,3 +97,17 @@ You can directly access the production-ready live app here:
 For local testing:
 - Run backend locally: `cd backend && npm run dev`
 - Run frontend locally: `cd frontend && npm run dev` (views at `http://localhost:5173`)
+
+---
+
+## 📸 Screenshots
+
+### 1. Student Login
+![Login](Grammar40/screenshots/login.png)
+
+### 2. Welcome Dashboard
+![Dashboard](Grammar40/screenshots/dashboard.png)
+
+### 3. Classroom Leaderboard
+![Leaderboard](Grammar40/screenshots/leaderboard.png)
+
