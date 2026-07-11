@@ -89,18 +89,11 @@ node src/seed/lessons.js
 > - **Email**: `admin@grammar40.com`
 > - **Password**: `Admin@2025`
 
-### 4. Start Development Servers
-**Backend**:
-```bash
-cd backend
-npm run dev
-```
+### 4. Access Live Version
+You can directly access the production-ready live app here:
+- 🖥️ **Live Website**: **[https://grammar40-frontend.vercel.app](https://grammar40-frontend.vercel.app)**
+- ⚙️ **Backend API**: **[https://grammar40-backend.vercel.app](https://grammar40-backend.vercel.app)**
 
-**Frontend**:
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Open **http://localhost:5173** to view the app!
+For local testing:
+- Run backend locally: `cd backend && npm run dev`
+- Run frontend locally: `cd frontend && npm run dev` (views at `http://localhost:5173`)
